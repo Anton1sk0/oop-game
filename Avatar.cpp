@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Avatar::Avatar() {
+Avatar::Avatar() { 
 
 }
 
