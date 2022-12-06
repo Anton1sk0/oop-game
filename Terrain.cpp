@@ -1,47 +1,60 @@
 #include "Terrain.h"
 
-Terrain::Terrain() : avatar(0), warrior(0), potion(0) {
-
+Terrain::Terrain() : avatar(0), warrior(0), potion(0)
+{
 }
 
-Terrain::~Terrain() {
-
+Terrain::~Terrain()
+{
 }
 
-bool Terrain::empty() {
-    return accessible() && warrior == 0 && avatar == 0;
+bool Terrain::empty()
+{
+    return accessible() && warrior == 0 && avatar == 0; // no woods or water, but neither other entity
 }
-
-Avatar* Terrain::getAvatar() const {
+/*                   JUST SOME GETTERS SETTERS                    */
+Avatar *Terrain::getAvatar() const
+{
     return avatar;
 }
 
-void Terrain::setAvatar(Avatar* avatar) {
+void Terrain::setAvatar(Avatar *avatar)
+{
     this->avatar = avatar;
 }
 
-Potion* Terrain::getPotion() const {
+Potion *Terrain::getPotion() const
+{
     return potion;
 }
 
-void Terrain::setPotion(Potion* potion) {
+void Terrain::setPotion(Potion *potion)
+{
     this->potion = potion;
 }
 
-Warrior* Terrain::getWarrior() const {
+Warrior *Terrain::getWarrior() const
+{
     return warrior;
 }
 
-void Terrain::setWarrior(Warrior* warrior) {
+void Terrain::setWarrior(Warrior *warrior)
+{
     this->warrior = warrior;
 }
 
-void Terrain::display() {
-    if (avatar != 0) {
+void Terrain::display()
+{
+    if (avatar != 0)
+    {
         avatar->print();
-    } else if (warrior != 0) {
+    }
+    else if (warrior != 0)
+    {
         warrior->print();
-    } else {
+    }
+    else
+    {
         print();
     }
 }

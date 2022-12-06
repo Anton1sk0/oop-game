@@ -5,7 +5,7 @@
 #include "Warrior.h"
 #include "Potion.h"
 
-class Terrain
+class Terrain // woods earth water are terrains
 {
 public:
     Terrain();
@@ -14,7 +14,7 @@ public:
     virtual void display();
     virtual bool accessible() = 0;
     virtual bool empty();
-
+    // just some getters-setters
     Avatar *getAvatar() const;
     void setAvatar(Avatar *avatar);
     Potion *getPotion() const;

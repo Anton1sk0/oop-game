@@ -3,17 +3,15 @@
 
 #include "Terrain.h"
 
-
-class Earth : public Terrain {
+class Earth : public Terrain
+{
 public:
     Earth();
     virtual ~Earth();
-    
-    virtual void print();
-    virtual bool accessible();
-private:
 
+    virtual void print();
+    virtual bool accessible(); // accessible means there no woods or water
+private:
 };
 
 #endif /* EARTH_H */
-

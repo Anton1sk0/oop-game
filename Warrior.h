@@ -4,7 +4,7 @@
 
 #include "Entity.h"
 
-class Warrior : public Entity
+class Warrior : public Entity // vampires and werewolfs are warriors(and warriors are entitys)
 {
 public:
     Warrior();
