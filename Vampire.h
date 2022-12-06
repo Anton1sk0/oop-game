@@ -4,16 +4,15 @@
 #include "Entity.h"
 #include "Warrior.h"
 
-
-class Vampire : public Warrior {
+class Vampire : public Warrior
+{
 public:
     Vampire();
     virtual ~Vampire();
-    
+
     virtual void print();
+
 private:
-    
 };
 
 #endif /* VAMPIRE_H */
-

@@ -3,18 +3,16 @@
 
 #include "Entity.h"
 
-
-class Avatar : public Entity {
+class Avatar : public Entity
+{
 public:
     Avatar();
-    Avatar(const Avatar& orig);
     virtual ~Avatar();
-    
+
     virtual void print();
+
 private:
     int potions;
 };
 
-
 #endif /* AVATAR_H */
-

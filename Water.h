@@ -3,17 +3,16 @@
 
 #include "Terrain.h"
 
-
-class Water : public Terrain {
+class Water : public Terrain
+{
 public:
     Water();
     virtual ~Water();
-    
+
     virtual void print();
     virtual bool accessible();
-private:
 
+private:
 };
 
 #endif /* WATER_H */
-

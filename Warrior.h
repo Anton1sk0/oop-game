@@ -4,13 +4,14 @@
 
 #include "Entity.h"
 
-
-class Warrior : public Entity {
+class Warrior : public Entity
+{
 public:
     Warrior();
     virtual ~Warrior();
-    
+
     virtual void print() = 0;
+
 protected:
     int strength;
     int armor;
@@ -18,4 +19,3 @@ protected:
 };
 
 #endif /* WARRIOR_H */
-
