@@ -12,42 +12,42 @@ using namespace std;
 
 Map::Map(int width, int height) : loops(1000), width(width), height(height)
 {
-    terrain = new Terrain **[height];
+    terrain = new Terrain **[height]; // makes the first board of boards of pointers
 
     for (int i = 0; i < height; i++)
     {
-        terrain[i] = new Terrain *[width];
+        terrain[i] = new Terrain *[width]; // makes a board for every element of previous board
     }
 
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
         {
-            int x = rand() % 20;
+            int x = rand() % 20; // genarate numbers from 0 to 19
 
-            if (x <= 14)
+            if (x <= 14) // 0-14 should be earth as i have seen from tests to be playable
             {
                 terrain[i][j] = new Earth();
             }
-            else if (x <= 17)
+            else if (x <= 17) // rest woods
             {
                 terrain[i][j] = new Woods();
             }
             else
             {
-                terrain[i][j] = new Water();
+                terrain[i][j] = new Water(); // and waters
             }
         }
     }
 }
 
-Map::~Map()
+Map::~Map() // destructor delete the maps from new used previously
 {
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
         {
-            delete terrain[i][j];
+            delete terrain[i][j]; // and terrains from new.
         }
     }
     for (int i = 0; i < height; i++)

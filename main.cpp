@@ -18,7 +18,7 @@ int main(int argc, char **argv)
     //    cout << "Type the map height: ";
     //    cin >> height;
 
-    Game game(width, height);
+    Game game(width, height); // game constructor calls map contructor to create the map
 
     game.create();
 

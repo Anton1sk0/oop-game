@@ -23,7 +23,7 @@ public:
     void setWarrior(Warrior *warrior);
 
 protected:
-    virtual void print() = 0;
+    virtual void print() = 0; // virtual cause could be water/earth/woods
     Avatar *avatar;
     Warrior *warrior;
     Potion *potion;

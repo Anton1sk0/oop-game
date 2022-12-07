@@ -4,18 +4,20 @@
 
 using namespace std;
 
-Earth::Earth() {
-
+Earth::Earth()
+{
 }
 
-Earth::~Earth() {
-
+Earth::~Earth()
+{
 }
 
-void Earth::print() {
-    printf("%3s","");
+void Earth::print()
+{
+    printf("%3s", "");
 }
 
-bool Earth::accessible() {
+bool Earth::accessible()
+{
     return true;
 }
