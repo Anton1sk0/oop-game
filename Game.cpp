@@ -20,8 +20,8 @@ void Game::display()
 
 void Game::create()
 {
-    map.placeAvatar();
-    map.placeEntities();
+    map.placeAvatar();   // place the avatar random on map
+    map.placeEntities(); // place the entities random on map
 
     running = true;
 }

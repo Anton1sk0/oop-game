@@ -14,7 +14,6 @@ Avatar::~Avatar()
 
 void Avatar::print()
 {
-    //    printf("%4s", "\033[31m♚\033[0m");
+
     printf("%-3s", "\033[1;33m🤺\033[0m "); // problems with size of icon
-    //    printf("%-3s", "  🤺");
 }

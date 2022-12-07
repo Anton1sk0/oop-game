@@ -88,15 +88,15 @@ void Map::display()
 
 void Map::placeEntities()
 {
-    int n = width * height / 15;
+    int n = width * height / 15; // how many entities must map has, is stadar from project instuctions
     for (int k = 0; k < n; k++)
     {
-        for (int m = 0; m < loops; m++)
+        for (int m = 0; m < loops; m++) // 'loops' is for safety
         {
-            int i = rand() % height;
-            int j = rand() % width;
+            int i = rand() % height; //"random height position"
+            int j = rand() % width;  //"random width position"
 
-            if (!terrain[i][j]->empty())
+            if (!terrain[i][j]->empty()) // if terrain not emtpy try new i,j
             {
                 loops++;
                 continue;
@@ -112,7 +112,7 @@ void Map::placeEntities()
             int i = rand() % height;
             int j = rand() % width;
 
-            if (!terrain[i][j]->empty())
+            if (!terrain[i][j]->empty()) // if terrain is not empty try new i,j
             {
                 continue;
             }

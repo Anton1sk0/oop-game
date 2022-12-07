@@ -45,16 +45,16 @@ void Terrain::setWarrior(Warrior *warrior)
 
 void Terrain::display()
 {
-    if (avatar != 0)
+    if (avatar != 0) // if avatar exists call print for avatar
     {
         avatar->print();
     }
-    else if (warrior != 0)
+    else if (warrior != 0) // if warrior exists call print for warrior
     {
         warrior->print();
     }
     else
     {
-        print();
+        print(); // else call virtual print for subclasses
     }
 }

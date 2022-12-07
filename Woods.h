@@ -9,7 +9,7 @@ public:
     Woods();
     virtual ~Woods();
 
-    virtual void print();
+    virtual void print(); // override
     virtual bool accessible();
 
 private:
