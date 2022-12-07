@@ -8,7 +8,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    int width = 20, height = 20; // map size but 20x20 for now tests
+    int width = 20, height = 20; // map size but 20x20 for now test
 
     srand(time(0));
 
