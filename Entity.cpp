@@ -1,9 +1,7 @@
 #include "Entity.h"
 
-Entity::Entity()
-{
+Entity::Entity(string tag) : TAG(tag) {
 }
 
-Entity::~Entity()
-{
+Entity::~Entity() {
 }

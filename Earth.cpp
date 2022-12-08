@@ -14,10 +14,10 @@ Earth::~Earth()
 
 void Earth::print()
 {
-    printf("%3s", ""); // override
+    printf("%3s", "");
 }
 
 bool Earth::accessible()
 {
-    return true; // it is accesible , avatar and warrios can step only on earth terrains
+    return true;
 }

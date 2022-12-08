@@ -7,6 +7,8 @@
 #include "Earth.h"
 #include "Vampire.h"
 #include "Werewolf.h"
+#include "Potion.h"
+#include "Game.h"
 
 using namespace std;
 
@@ -86,17 +88,17 @@ void Map::display()
     cout << endl;
 }
 
-void Map::placeEntities()
+void Map::placeEntities() // places warriors,(vampires and werewolfs)
 {
-    int n = width * height / 15; // how many entities must map has, is stadar from project instuctions
+    int n = width * height / 15;
     for (int k = 0; k < n; k++)
     {
-        for (int m = 0; m < loops; m++) // 'loops' is for safety
+        for (int m = 0; m < loops; m++)
         {
-            int i = rand() % height; //"random height position"
-            int j = rand() % width;  //"random width position"
+            int i = rand() % height;
+            int j = rand() % width;
 
-            if (!terrain[i][j]->empty()) // if terrain not emtpy try new i,j
+            if (!terrain[i][j]->empty())
             {
                 loops++;
                 continue;
@@ -112,7 +114,7 @@ void Map::placeEntities()
             int i = rand() % height;
             int j = rand() % width;
 
-            if (!terrain[i][j]->empty()) // if terrain is not empty try new i,j
+            if (!terrain[i][j]->empty())
             {
                 continue;
             }
@@ -124,7 +126,29 @@ void Map::placeEntities()
     }
 }
 
-void Map::placeAvatar()
+Avatar *Map::placeAvatar(Avatar *avatar) // places avatar random on the map
+{
+    for (int k = 0; k < loops; k++) // 'loops' is for safety
+    {
+        int i = rand() % height;
+        int j = rand() % width;
+
+        if (!terrain[i][j]->empty()) // if is possible to place the avatar there
+        {
+            continue;
+        }
+
+        terrain[i][j]->setAvatar(avatar);
+        cout << "Avatar placed at: " << i << "," << j << endl;
+
+        avatarPosition.row = i; // keeps avatar position
+        avatarPosition.column = j;
+
+        return avatar; // keeps avatar
+    }
+}
+
+void Map::placePotion() // place potion on the map if is possible
 {
     for (int k = 0; k < loops; k++) // 'loops' is for safety
     {
@@ -136,12 +160,62 @@ void Map::placeAvatar()
             continue;
         }
 
-        terrain[i][j]->setAvatar(new Avatar());
-        cout << "Avatar placed at: " << i << "," << j << endl;
+        terrain[i][j]->setPotion(new Potion());
+        cout << "Potion placed at: " << i << "," << j << endl;
 
-        avatarPosition.row = i;
-        avatarPosition.column = j;
+        potionPosition.row = i;
+        potionPosition.column = j;
 
         break;
+    }
+}
+
+int Map::count(string tag) // counts warriors, vampires or werewolfs depends on tag
+{
+    int counter = 0;
+
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            Terrain *source = terrain[i][j];
+            Warrior *w = source->getWarrior();
+
+            if (w != nullptr && w->TAG == tag)
+            {
+                counter++;
+            }
+        }
+    }
+    return counter;
+}
+
+void Map::moveWarriors()
+{
+    for (int i = 0; i < height; i++) // iterate the map
+    {
+        for (int j = 0; j < width; j++)
+        {
+            Terrain *source = terrain[i][j];
+            Warrior *w = source->getWarrior();
+
+            if (w != nullptr && rand() % 100 > 50) // 50% chance to move if there is warrior there
+            {
+                Position pos = w->getRandomMove(i, j);
+                int destination_col = pos.column;
+                int destination_row = pos.row;
+
+                if (destination_row >= 0 && destination_row < getHeight() && destination_col >= 0 && destination_col < getWidth()) // check if it is inside map limits
+                {
+                    Terrain *destination = terrain[destination_row][destination_col];
+
+                    if (destination->empty())
+                    {
+                        destination->setWarrior(source->getWarrior()); // move the warrior to the new position
+                        source->setWarrior(nullptr);                   // delete from previous terrain
+                    }
+                }
+            }
+        }
     }
 }

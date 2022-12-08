@@ -4,6 +4,8 @@
 #include "Avatar.h"
 #include "Warrior.h"
 #include "Potion.h"
+#include "Werewolf.h"
+#include "Vampire.h"
 
 class Terrain // woods earth water are terrains
 {
@@ -11,9 +13,11 @@ public:
     Terrain();
     virtual ~Terrain();
 
-    virtual void display();        // checks what is inside that terrain so can then call print for it and show it
-    virtual bool accessible() = 0; // accessible is virtual cause is not the same for all terrains
-    virtual bool empty();          // is emtpy if accessible and warrior is nullptr and null ptr
+    virtual void display();
+    virtual bool accessible() = 0;
+    virtual bool empty();
+    virtual bool hasPotion();
+    
     // just some getters-setters
     Avatar *getAvatar() const;
     void setAvatar(Avatar *avatar);

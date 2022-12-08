@@ -9,9 +9,8 @@ public:
     Earth();
     virtual ~Earth();
 
-    virtual void print(); // override
-    virtual bool accessible();
-
+    virtual void print();      // override
+    virtual bool accessible(); // accessible means there no woods or water
 private:
 };
 

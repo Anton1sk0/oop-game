@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Warrior.h"
+#include "Position.h"
 
 class Vampire : public Warrior
 {
@@ -11,6 +12,8 @@ public:
     virtual ~Vampire();
 
     virtual void print();
+    
+    virtual Position getRandomMove(int row, int col);
 
 private:
 };

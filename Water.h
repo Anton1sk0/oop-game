@@ -9,7 +9,7 @@ public:
     Water();
     virtual ~Water();
 
-    virtual void print(); // override
+    virtual void print();
     virtual bool accessible();
 
 private:

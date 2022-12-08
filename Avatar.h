@@ -11,8 +11,32 @@ public:
 
     virtual void print();
 
+    int getPotions() const
+    {
+        return potions;
+    }
+
+    void setPotions(int potions)
+    {
+        this->potions = potions;
+    }
+
+    void increasePotions()
+    {
+        potions++;
+    }
+
+    void consumePosition()
+    {
+        if (potions > 0)
+        {
+            potions--;
+        }
+    }
+
 private:
     int potions;
+    bool group;
 };
 
 #endif /* AVATAR_H */
