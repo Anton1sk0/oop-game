@@ -20,9 +20,9 @@ void Game::display()
     map.display();
 }
 
-void Game::create(Avatar *avatar)
+void Game::create()
 {
-    avatar = map.placeAvatar(avatar);
+    avatar = map.placeAvatar();
     map.placeEntities();
     map.placePotion();
 
@@ -113,6 +113,19 @@ void Game::executeUserAction(char action)
     {
         exit(0);
     }
+    if (action == 'h')
+    {
+        if (avatar->get_group() == 0 && avatar->getPotions() > 0 && !day)
+        {
+            avatar->consumePosition();
+            map.heal(WEREWOLF_TAG);
+        }
+        else if (avatar->get_group() == 1 && avatar->getPotions() > 0 && day)
+        {
+            avatar->consumePosition();
+            map.heal(VAMPIRE_TAG);
+        }
+    }
 }
 
 void Game::mainLoop()
@@ -125,6 +138,17 @@ void Game::mainLoop()
 
         int v = map.count(VAMPIRE_TAG);
         int w = map.count(WEREWOLF_TAG);
+
+        if (v == 0) // GAME ENDS WHEN VAMPIRES OR WEREWOLFS TURN TO 0
+        {
+            cout << "All vampires have been eliminated, \"TEAM WEREWOLF WINS\" ";
+            break;
+        }
+        if (w == 0)
+        {
+            cout << "All werewolfs have been eliminated, \"TEAM VAMPIRES WINS\" ";
+            break;
+        }
 
         string note = day ? "* Day    " : " * NIGHT ";
         string am_pm = ((move_counter / 12) % 2 == 0) ? "am" : "pm";

@@ -97,14 +97,18 @@ void Map::placeEntities() // places warriors,(vampires and werewolfs)
         {
             int i = rand() % height;
             int j = rand() % width;
+            int power = rand() % 4 + 1;
 
             if (!terrain[i][j]->empty())
             {
                 loops++;
                 continue;
             }
+            Vampire *vampire = new Vampire();
+            terrain[i][j]->setWarrior(vampire);
+            vampire->setHealth(3); // set health and power for every vampire
+            vampire->setPower(power);
 
-            terrain[i][j]->setWarrior(new Vampire());
             cout << "vampire placed at: " << i << "," << j << endl;
             break;
         }
@@ -113,21 +117,35 @@ void Map::placeEntities() // places warriors,(vampires and werewolfs)
         {
             int i = rand() % height;
             int j = rand() % width;
-
+            int power = rand() % 4 + 1;
             if (!terrain[i][j]->empty())
             {
                 continue;
             }
-
-            terrain[i][j]->setWarrior(new Werewolf());
+            Werewolf *werewolf = new Werewolf();
+            terrain[i][j]->setWarrior(werewolf);
+            werewolf->setHealth(0); // set health and power for every werewolf
+            werewolf->setPower(power);
             cout << "werewolf placed at: " << i << "," << j << endl;
             break;
         }
     }
 }
 
-Avatar *Map::placeAvatar(Avatar *avatar) // places avatar random on the map
+Avatar *Map::placeAvatar() // places avatar random on the map
 {
+    int type;
+    Avatar *avatar = new Avatar();
+    cout << "type 0 if u want your avatar be with werewolfs \n or type 1 if u want to your avatar to be with vampires";
+    cin >> type;
+    if (type == 0)
+    {
+        avatar->set_group(0);
+    }
+    else
+    {
+        avatar->set_group(1);
+    }
     for (int k = 0; k < loops; k++) // 'loops' is for safety
     {
         int i = rand() % height;
@@ -209,12 +227,31 @@ void Map::moveWarriors()
                 {
                     Terrain *destination = terrain[destination_row][destination_col];
 
-                    if (destination->empty())
+                    if (destination->empty() && (!destination->hasPotion()))
                     {
                         destination->setWarrior(source->getWarrior()); // move the warrior to the new position
                         source->setWarrior(nullptr);                   // delete from previous terrain
                     }
                 }
+            }
+        }
+    }
+}
+
+void Map::heal(string tag) // heals warriors, vampires or werewolfs depends on tag /
+{
+
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            Terrain *source = terrain[i][j];
+            Warrior *w = source->getWarrior();
+
+            if (w != nullptr && w->TAG == tag) // if there is warrior there and match the tag we search for
+            {
+                int currentHealth = w->getHealth();
+                w->setHealth(currentHealth + 1); // increase health by 1
             }
         }
     }

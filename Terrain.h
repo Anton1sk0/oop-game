@@ -6,6 +6,8 @@
 #include "Potion.h"
 #include "Werewolf.h"
 #include "Vampire.h"
+#include "VampireAvatar.h"
+#include "WerewolfAvatar.h"
 
 class Terrain // woods earth water are terrains
 {
@@ -17,7 +19,7 @@ public:
     virtual bool accessible() = 0;
     virtual bool empty();
     virtual bool hasPotion();
-    
+
     // just some getters-setters
     Avatar *getAvatar() const;
     void setAvatar(Avatar *avatar);

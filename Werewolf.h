@@ -12,7 +12,7 @@ public:
     virtual ~Werewolf();
 
     virtual void print();
-    
+
     virtual Position getRandomMove(int row, int col);
 
 private:

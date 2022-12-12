@@ -9,7 +9,7 @@ public:
     Game(int width, int height);
     virtual ~Game();
 
-    void create(Avatar *avatar);
+    void create();
     void mainLoop();
     void display();
     void checkItems(Terrain *terrain);

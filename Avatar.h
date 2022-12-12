@@ -16,12 +16,12 @@ public:
         return potions;
     }
 
-    void setPotions(int potions)
+    virtual void setPotions(int potions)
     {
         this->potions = potions;
     }
 
-    void increasePotions()
+    virtual void increasePotions()
     {
         potions++;
     }
@@ -33,8 +33,17 @@ public:
             potions--;
         }
     }
+    void set_group(bool group)
+    {
+        this->group = group;
+    }
 
-private:
+    bool get_group()
+    {
+        return this->group;
+    }
+
+protected:
     int potions;
     bool group;
 };

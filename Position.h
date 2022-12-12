@@ -2,7 +2,8 @@
 #ifndef POSITION_H
 #define POSITION_H
 
-class Position {
+class Position
+{
 public:
     int row, column;
 
@@ -12,4 +13,3 @@ public:
 };
 
 #endif /* POSITION_H */
-

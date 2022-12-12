@@ -10,38 +10,46 @@
 
 using namespace std;
 
-class Map {
+class Map
+{
 public:
     Map(int width, int height);
     virtual ~Map();
 
     void display();
     void placeEntities();
-    Avatar * placeAvatar(Avatar * avatar);
+    Avatar *placeAvatar();
     void placePotion();
-    
-    Position &getAvatarPosition() {
+
+    Position &getAvatarPosition()
+    {
         return avatarPosition;
     }
 
-    void setAvatarPosition(Position &avatarPosition) {
+    void setAvatarPosition(Position &avatarPosition)
+    {
         this->avatarPosition = avatarPosition;
     }
 
-    Terrain *getTerrain(int row, int column) const {
+    Terrain *getTerrain(int row, int column) const
+    {
         return terrain[row][column];
     }
 
-    int getHeight() const {
+    int getHeight() const
+    {
         return height;
     }
 
-    int getWidth() const {
+    int getWidth() const
+    {
         return width;
     }
-    
+
     int count(string tag);
-    
+
+    void heal(string tag);
+
     void moveWarriors();
 
 private:
