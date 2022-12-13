@@ -3,11 +3,11 @@
 
 #include "Game.h"
 #include "Terrain.h"
-#include "tags.h"
+#include "Tags.h"
 
 using namespace std;
 
-Game::Game(int width, int height) : map(width, height), day(true), running(false), move_counter(12)
+Game::Game(int width, int height) : map(width, height), day(true), running(false), move_counter(12), avatar(nullptr), quit_activated(false)
 {
 }
 
@@ -20,13 +20,14 @@ void Game::display()
     map.display();
 }
 
-void Game::create()
+void Game::create(Avatar *avatar)
 {
-    avatar = map.placeAvatar();
+    this->avatar = map.placeAvatar(avatar);
     map.placeEntities();
     map.placePotion();
 
     running = true;
+    quit_activated = false;
 }
 
 void Game::checkItems(Terrain *terrain) // checks if there is a potion in that area and collect it if player touch
@@ -111,19 +112,14 @@ void Game::executeUserAction(char action)
 
     if (action == 'q')
     {
-        exit(0);
+        quit_activated = true;
     }
+
     if (action == 'h')
     {
-        if (avatar->get_group() == 0 && avatar->getPotions() > 0 && !day)
+        if (avatar->hasPotions())
         {
-            avatar->consumePosition();
-            map.heal(WEREWOLF_TAG);
-        }
-        else if (avatar->get_group() == 1 && avatar->getPotions() > 0 && day)
-        {
-            avatar->consumePosition();
-            map.heal(VAMPIRE_TAG);
+            map.heal(avatar, day);
         }
     }
 }
@@ -160,6 +156,11 @@ void Game::mainLoop()
         if (action != "")
         {
             executeUserAction(action[0]);
+
+            if (quit_activated == true)
+            {
+                break;
+            }
 
             if (running == true)
             {

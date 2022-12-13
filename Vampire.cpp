@@ -1,11 +1,11 @@
 #include <iostream>
 
 #include "Vampire.h"
-#include "tags.h"
+#include "Tags.h"
 
 using namespace std;
 
-Vampire::Vampire() : Warrior(VAMPIRE_TAG)
+Vampire::Vampire(int strength, int armor, int health) : Warrior(VAMPIRE_TAG, strength, armor, health) 
 {
 }
 

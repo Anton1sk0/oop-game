@@ -3,13 +3,12 @@
 
 #include "Map.h"
 
-class Game
-{
+class Game {
 public:
     Game(int width, int height);
     virtual ~Game();
 
-    void create();
+    void create(Avatar * avatar);
     void mainLoop();
     void display();
     void checkItems(Terrain *terrain);
@@ -23,14 +22,15 @@ public:
 
 private:
     Map map;
-    bool day;     // true means day , false means night
+    bool day; // true means day , false means night
     bool running; // for future pause?
     int move_counter;
 
     Avatar *avatar;
+    bool quit_activated;
 
     void executeUserAction(char action); // executes Users Action from input
-    void executeWarriorsActions();       // executes random action for warriors
+    void executeWarriorsActions(); // executes random action for warriors
 };
 
 #endif /* GAME_H */

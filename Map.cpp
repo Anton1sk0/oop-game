@@ -12,31 +12,24 @@
 
 using namespace std;
 
-Map::Map(int width, int height) : loops(1000), width(width), height(height)
-{
+Map::Map(int width, int height) : loops(1000), width(width), height(height) {
     terrain = new Terrain **[height]; // makes the first board of boards of pointers
 
-    for (int i = 0; i < height; i++)
-    {
+    for (int i = 0; i < height; i++) {
         terrain[i] = new Terrain *[width]; // makes a board for every element of previous board
     }
 
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
-        {
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
             int x = rand() % 20; // genarate numbers from 0 to 19
 
             if (x <= 14) // 0-14 should be earth as i have seen from tests to be playable
             {
                 terrain[i][j] = new Earth();
-            }
-            else if (x <= 17) // rest woods
+            } else if (x <= 17) // rest woods
             {
                 terrain[i][j] = new Woods();
-            }
-            else
-            {
+            } else {
                 terrain[i][j] = new Water(); // and waters
             }
         }
@@ -45,42 +38,34 @@ Map::Map(int width, int height) : loops(1000), width(width), height(height)
 
 Map::~Map() // destructor delete the maps from new used previously
 {
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
-        {
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
             delete terrain[i][j]; // and terrains from new.
         }
     }
-    for (int i = 0; i < height; i++)
-    {
+    for (int i = 0; i < height; i++) {
         delete[] terrain[i];
     }
 
     delete[] terrain;
 }
 
-void Map::display()
-{
-    for (int j = 0; j < width + 2; j++)
-    {
+void Map::display() {
+    for (int j = 0; j < width + 2; j++) {
         printf("%3s", "---");
     }
     cout << endl;
 
-    for (int i = 0; i < height; i++)
-    {
+    for (int i = 0; i < height; i++) {
         printf("%3s", "| ");
 
-        for (int j = 0; j < width; j++)
-        {
+        for (int j = 0; j < width; j++) {
             terrain[i][j]->display();
         }
         printf("%3s", "|\n");
     }
 
-    for (int j = 0; j < width + 2; j++)
-    {
+    for (int j = 0; j < width + 2; j++) {
         printf("%3s", "---");
     }
     cout << endl;
@@ -91,61 +76,40 @@ void Map::display()
 void Map::placeEntities() // places warriors,(vampires and werewolfs)
 {
     int n = width * height / 15;
-    for (int k = 0; k < n; k++)
-    {
-        for (int m = 0; m < loops; m++)
-        {
+    for (int k = 0; k < 2*n; k++) {
+        for (int m = 0; m < loops; m++) {
             int i = rand() % height;
             int j = rand() % width;
-            int power = rand() % 4 + 1;
-
-            if (!terrain[i][j]->empty())
-            {
+            
+            if (!terrain[i][j]->empty()) {
                 loops++;
                 continue;
             }
-            Vampire *vampire = new Vampire();
-            terrain[i][j]->setWarrior(vampire);
-            vampire->setHealth(3); // set health and power for every vampire
-            vampire->setPower(power);
+            
+            int strength = rand() % 4 + 1;
+            int armor = rand() % 4 + 1;
+            int health = rand() % 4 + 1;
 
-            cout << "vampire placed at: " << i << "," << j << endl;
-            break;
-        }
-
-        for (int m = 0; m < loops; m++) // 'loops' is for safety
-        {
-            int i = rand() % height;
-            int j = rand() % width;
-            int power = rand() % 4 + 1;
-            if (!terrain[i][j]->empty())
-            {
-                continue;
+            Warrior *warrior = nullptr;
+            
+            if (k < n) {
+                warrior = new Vampire(strength, armor, health);
+                cout << "vampire placed at: " << i << "," << j << endl;
+            } else {
+                warrior = new Werewolf(strength, armor, health);
+                cout << "werewolf placed at: " << i << "," << j << endl;
             }
-            Werewolf *werewolf = new Werewolf();
-            terrain[i][j]->setWarrior(werewolf);
-            werewolf->setHealth(0); // set health and power for every werewolf
-            werewolf->setPower(power);
-            cout << "werewolf placed at: " << i << "," << j << endl;
+            
+            terrain[i][j]->setWarrior(warrior);
             break;
         }
     }
 }
 
-Avatar *Map::placeAvatar() // places avatar random on the map
+Avatar *Map::placeAvatar(Avatar * avatar) // places avatar random on the map
 {
     int type;
-    Avatar *avatar = new Avatar();
-    cout << "type 0 if u want your avatar be with werewolfs \n or type 1 if u want to your avatar to be with vampires";
-    cin >> type;
-    if (type == 0)
-    {
-        avatar->set_group(0);
-    }
-    else
-    {
-        avatar->set_group(1);
-    }
+
     for (int k = 0; k < loops; k++) // 'loops' is for safety
     {
         int i = rand() % height;
@@ -173,8 +137,7 @@ void Map::placePotion() // place potion on the map if is possible
         int i = rand() % height;
         int j = rand() % width;
 
-        if (!terrain[i][j]->empty())
-        {
+        if (!terrain[i][j]->empty()) {
             continue;
         }
 
@@ -192,15 +155,12 @@ int Map::count(string tag) // counts warriors, vampires or werewolfs depends on 
 {
     int counter = 0;
 
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
-        {
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
             Terrain *source = terrain[i][j];
             Warrior *w = source->getWarrior();
 
-            if (w != nullptr && w->TAG == tag)
-            {
+            if (w != nullptr && w->TAG == tag) {
                 counter++;
             }
         }
@@ -208,12 +168,10 @@ int Map::count(string tag) // counts warriors, vampires or werewolfs depends on 
     return counter;
 }
 
-void Map::moveWarriors()
-{
+void Map::moveWarriors() {
     for (int i = 0; i < height; i++) // iterate the map
     {
-        for (int j = 0; j < width; j++)
-        {
+        for (int j = 0; j < width; j++) {
             Terrain *source = terrain[i][j];
             Warrior *w = source->getWarrior();
 
@@ -227,10 +185,9 @@ void Map::moveWarriors()
                 {
                     Terrain *destination = terrain[destination_row][destination_col];
 
-                    if (destination->empty() && (!destination->hasPotion()))
-                    {
+                    if (destination->empty() && (!destination->hasPotion())) {
                         destination->setWarrior(source->getWarrior()); // move the warrior to the new position
-                        source->setWarrior(nullptr);                   // delete from previous terrain
+                        source->setWarrior(nullptr); // delete from previous terrain
                     }
                 }
             }
@@ -238,20 +195,16 @@ void Map::moveWarriors()
     }
 }
 
-void Map::heal(string tag) // heals warriors, vampires or werewolfs depends on tag /
+void Map::heal(Avatar * avatar, bool day) // heals warriors, vampires or werewolfs depends on tag /
 {
 
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
-        {
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
             Terrain *source = terrain[i][j];
             Warrior *w = source->getWarrior();
 
-            if (w != nullptr && w->TAG == tag) // if there is warrior there and match the tag we search for
-            {
-                int currentHealth = w->getHealth();
-                w->setHealth(currentHealth + 1); // increase health by 1
+            if (w != nullptr) {
+                avatar->heal(w, day);
             }
         }
     }

@@ -2,50 +2,40 @@
 #define AVATAR_H
 
 #include "Entity.h"
+#include "Warrior.h"
 
-class Avatar : public Entity
-{
+class Avatar : public Entity {
 public:
     Avatar();
     virtual ~Avatar();
-
-    virtual void print();
-
-    int getPotions() const
-    {
+   
+    int getPotions() const {
         return potions;
     }
+    
+    bool hasPotions() {
+        return potions > 0;
+    }
 
-    virtual void setPotions(int potions)
-    {
+    virtual void setPotions(int potions) {
         this->potions = potions;
     }
 
-    virtual void increasePotions()
-    {
+    virtual void increasePotions() {
         potions++;
     }
 
-    void consumePosition()
-    {
-        if (potions > 0)
-        {
+    void consumePosition() {
+        if (potions > 0) {
             potions--;
         }
     }
-    void set_group(bool group)
-    {
-        this->group = group;
-    }
-
-    bool get_group()
-    {
-        return this->group;
-    }
+    
+    virtual void print() = 0;
+    virtual void heal(Warrior * warrior, bool day) = 0;
 
 protected:
     int potions;
-    bool group;
 };
 
 #endif /* AVATAR_H */

@@ -9,5 +9,7 @@ public:
     WerewolfAvatar();
     ~WerewolfAvatar();
     virtual void print();
+    
+    virtual void heal(Warrior * warrior, bool day);
 };
 #endif

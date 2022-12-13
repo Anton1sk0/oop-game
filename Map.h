@@ -18,7 +18,7 @@ public:
 
     void display();
     void placeEntities();
-    Avatar *placeAvatar();
+    Avatar *placeAvatar(Avatar * avatar);
     void placePotion();
 
     Position &getAvatarPosition()
@@ -48,7 +48,7 @@ public:
 
     int count(string tag);
 
-    void heal(string tag);
+    void heal(Avatar * avatar, bool day);
 
     void moveWarriors();
 

@@ -8,7 +8,7 @@
 class Vampire : public Warrior
 {
 public:
-    Vampire();
+    Vampire(int strength, int armor, int health);
     virtual ~Vampire();
 
     virtual void print();

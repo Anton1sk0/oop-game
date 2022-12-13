@@ -12,7 +12,7 @@ using namespace std;
 class Warrior : public Entity // vampires and werewolfs are warriors(and warriors are entitys)
 {
 public:
-    Warrior(string tag);
+    Warrior(string tag, int strength, int armor, int health);
     virtual ~Warrior();
 
     virtual void print() = 0;

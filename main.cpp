@@ -10,8 +10,8 @@ using namespace std;
 int main(int argc, char **argv)
 {
     int width = 5, height = 10; // map size but 10x20 for now tests
-    // string species;
-    // Avatar *avatar = nullptr;
+    Avatar *avatar = nullptr;
+    string species;
 
     srand(time(0));
 
@@ -21,26 +21,32 @@ int main(int argc, char **argv)
     //    cout << "Type the map height: ";
     //    cin >> height;
 
-    // cout << "Type your group (v for vampires or w for werewolves: ";
-    // cin >> species;
+    do
+    {
+        cout << "Type your group (v for vampires or w for werewolves): ";
+        cin >> species;
 
-    // if (species[0] == 'v')
-    // {
-    //     avatar = new VampireAvatar();
-    // }
-
-    // if (species[0] == 'w')
-    // {
-    //     avatar = new WerewolfAvatar();
-    // }
+        if (species == "v")
+        { // choose what side your avatar wants to be
+            avatar = new VampireAvatar();
+        }
+        else if (species == "w")
+        {
+            avatar = new WerewolfAvatar();
+        }
+        else
+        {
+            cout << "Invalid choice \n";
+        }
+    } while (species != "v" && species != "w");
 
     Game game(width, height); // game constructor calls map contructor to create the map
 
-    game.create();
+    game.create(avatar);
 
     game.mainLoop();
 
-    // delete avatar;
+    delete avatar;
 
     return 0;
 }
