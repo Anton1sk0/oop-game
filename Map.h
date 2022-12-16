@@ -52,6 +52,12 @@ public:
 
     void moveWarriors();
 
+    void interactWarriors();
+
+    void chainheal(Warrior * w, Warrior *ww);
+
+    void attack(Warrior *w,Warrior *ww);
+
 private:
     int loops;
     int width, height;

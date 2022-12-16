@@ -30,9 +30,21 @@ public:
             potions--;
         }
     }
+
+    virtual void starthealing(){
+        healed=true;
+    }
+
+    virtual void endhealing(){
+        healed=false;
+    }
+        
+    
     
     virtual void print() = 0;
     virtual void heal(Warrior * warrior, bool day) = 0;
+
+    bool healed;
 
 protected:
     int potions;

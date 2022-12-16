@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Avatar::Avatar() : Entity(AVATAR_TAG), potions(1) {
+Avatar::Avatar() : Entity(AVATAR_TAG), potions(1),healed(false) {
 }
 
 Avatar::~Avatar() {

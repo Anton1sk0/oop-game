@@ -31,6 +31,7 @@ private:
 
     void executeUserAction(char action); // executes Users Action from input
     void executeWarriorsActions(); // executes random action for warriors
+    void executeWarriorsInteraction(); //execute interaction 
 };
 
 #endif /* GAME_H */

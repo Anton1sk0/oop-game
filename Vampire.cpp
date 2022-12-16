@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Vampire::Vampire(int strength, int armor, int health) : Warrior(VAMPIRE_TAG, strength, armor, health) 
+Vampire::Vampire(int strength, int armor, int health, int warriorPotion) : Warrior(VAMPIRE_TAG, strength, armor, health, warriorPotion) 
 {
 }
 

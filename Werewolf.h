@@ -8,7 +8,7 @@
 class Werewolf : public Warrior
 {
 public:
-    Werewolf(int strength, int armor, int health);
+    Werewolf(int strength, int armor, int health,int warriorPotion);
     virtual ~Werewolf();
 
     virtual void print();

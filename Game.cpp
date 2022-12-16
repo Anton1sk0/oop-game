@@ -47,6 +47,11 @@ void Game::executeWarriorsActions()
     map.moveWarriors(); //  random move for warrior
 }
 
+void Game::executeWarriorsInteraction(){
+    map.interactWarriors(); //interaction between warriors
+}
+
+
 void Game::executeUserAction(char action)
 {
     if (action == 'w' || action == 'a' || action == 's' || action == 'd')
@@ -164,7 +169,9 @@ void Game::mainLoop()
 
             if (running == true)
             {
+                
                 executeWarriorsActions();
+                executeWarriorsInteraction();
             }
             else
             {

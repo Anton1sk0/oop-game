@@ -19,6 +19,7 @@ void WerewolfAvatar::heal(Warrior *warrior, bool day)
     if (warrior->TAG == WEREWOLF_TAG && !day)
     {
         warrior->setHealth(warrior->getHealth() + 1);
-        this->consumePosition();
+        this->starthealing();
     }
 }
+

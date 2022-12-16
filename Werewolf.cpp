@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Werewolf::Werewolf(int strength, int armor, int health) : Warrior(WEREWOLF_TAG, strength, armor, health) {
+Werewolf::Werewolf(int strength, int armor, int health,int warriorPotion) : Warrior(WEREWOLF_TAG, strength, armor, health,warriorPotion) {
 }
 
 Werewolf::~Werewolf() {

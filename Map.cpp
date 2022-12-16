@@ -86,17 +86,18 @@ void Map::placeEntities() // places warriors,(vampires and werewolfs)
                 continue;
             }
             
-            int strength = rand() % 4 + 1;
-            int armor = rand() % 4 + 1;
-            int health = rand() % 4 + 1;
+            int strength = rand() % 3 + 1;
+            int armor = rand() % 2 + 1;
+            int health = rand() % 2 + 1;
+            int warriorPotion = rand()%2 +1;
 
             Warrior *warrior = nullptr;
             
             if (k < n) {
-                warrior = new Vampire(strength, armor, health);
+                warrior = new Vampire(strength, armor, health,warriorPotion);
                 cout << "vampire placed at: " << i << "," << j << endl;
             } else {
-                warrior = new Werewolf(strength, armor, health);
+                warrior = new Werewolf(strength, armor, health,warriorPotion);
                 cout << "werewolf placed at: " << i << "," << j << endl;
             }
             
@@ -208,4 +209,139 @@ void Map::heal(Avatar * avatar, bool day) // heals warriors, vampires or werewol
             }
         }
     }
+    if (avatar->healed){
+        avatar->consumePosition();
+        avatar->endhealing();
+    }
 }
+
+void  Map::interactWarriors(){
+    for (int i = 0; i < height; i++) // iterate the map
+    {
+        for (int j = 0; j < width; j++) {
+            Terrain *source = terrain[i][j];
+            Warrior *w = source->getWarrior(); //w gets the warrior in source terrain
+        if (w!=nullptr){
+            //////
+            if (i>0){
+                Terrain *above = terrain[i-1][j];
+                if(Warrior *ww = above->getWarrior()){  //ww gets the warrior in above terrain
+                    /////////there is a warrior in the cell above
+                    if(ww!=nullptr){
+                        if (w->TAG==ww->TAG){
+                            if (w->getHealth()>ww->getHealth()){  //if w warrior got more life than ww warrior 
+                                chainheal(w,ww);
+                                 
+                            }
+                        }
+                         else if (w->TAG != ww->TAG){
+                            attack(w,ww);
+                            if (ww->getHealth()<=0){
+                                above->setWarrior(nullptr);
+                            }
+                            }
+                    }
+                }
+            }
+            if (i<height-1){
+                Terrain *below=terrain[i+1][j];
+                if (below->getWarrior()){
+                    /////////there is a warrior in the cell below
+                    if(Warrior *ww = below->getWarrior()){  //ww gets the warrior in below terrain
+                    /////////there is a warrior in the cell above
+                    if(ww!=nullptr){
+                        if (w->TAG==ww->TAG){
+                            if (w->getHealth()>ww->getHealth()){  //if w warrior got more life than ww warrior 
+                                chainheal(w,ww); 
+                                
+                            }
+                        }
+                         else if (w->TAG != ww->TAG){
+                            attack(w,ww);
+                            if (ww->getHealth()<=0){
+                                below->setWarrior(nullptr);
+                            }
+                            }
+                    }
+                }
+                    
+                }
+            }
+            if (j>0){
+                Terrain *left=terrain[i][j-1]; 
+                if (left->getWarrior()){
+                    ////////// there is a warrior in the cell below 
+                    if(Warrior *ww = left->getWarrior()){  //ww gets the warrior in left terrain
+                    /////////there is a warrior in the cell above
+                    if(ww!=nullptr){
+                        if (w->TAG==ww->TAG){
+                            if (w->getHealth()>ww->getHealth()){  //if w warrior got more life than ww warrior 
+                                chainheal(w,ww);
+                               
+                                                 }
+                              }
+                              else if (w->TAG != ww->TAG){
+                            attack(w,ww);
+                            if (ww->getHealth()<=0){
+                                left->setWarrior(nullptr);
+                            }
+                            }
+                    }
+                }
+                }
+            }
+            if (j<width -1){
+                Terrain *right = terrain[i][j+1];
+                if(right->getWarrior()){
+                    ////////////////there is a warrior in the cell right 
+                    if(Warrior *ww = right->getWarrior()){  //ww gets the warrior in right terrain
+                    /////////there is a warrior in the cell above
+                    if(ww!=nullptr){
+                        if (w->TAG==ww->TAG){
+                            if (w->getHealth()>ww->getHealth()){  //if w warrior got more life than ww warrior 
+                                chainheal(w,ww);
+                               
+                            }
+                                 }   
+                        else if (w->TAG != ww->TAG){
+                            attack(w,ww);
+                            if (ww->getHealth()<=0){
+                                right->setWarrior(nullptr);
+                            }
+                        }
+                    }
+                }
+                }
+            }
+        }
+        }
+    }
+}
+
+void Map::chainheal(Warrior * w, Warrior * ww){
+        int r=rand()%3;
+        if(r==0){
+
+        }
+        else if (r==1 && ww->getHealth()!=2 && w->getWarriorPotion()>0){
+        w->decreaseWarriorPotion();
+        ww->increaseHealth();
+        }
+        else if (r==2 && ww->getHealth()!=2 && w->getWarriorPotion()>1){
+            w->decreaseWarriorPotion();
+            ww->increaseHealth();
+            w->decreaseWarriorPotion();
+            ww->increaseHealth();
+
+        }
+    }
+
+    void Map::attack(Warrior *w,Warrior *ww){
+        if (w->getpower()>= ww->getpower()){
+        int damage= w->getpower() - ww->getarmor();
+        int currenthealth=ww->getHealth();
+        int newhealth= currenthealth-damage;
+        if(w->getpower()>ww->getarmor()){ //if power is less than armor so the damage is ignored
+        ww->setHealth(newhealth);}
+        }
+    }

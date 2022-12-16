@@ -9,17 +9,17 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    int width = 5, height = 10; // map size but 10x20 for now tests
+    int width , height ; 
     Avatar *avatar = nullptr;
     string species;
 
     srand(time(0));
 
-    //    cout << "Type the map width: ";
-    //    cin >> width;
-    //
-    //    cout << "Type the map height: ";
-    //    cin >> height;
+       cout << "Type the map width: ";
+        cin >> width;
+    
+       cout << "Type the map height: ";
+        cin >> height;
 
     do
     {
